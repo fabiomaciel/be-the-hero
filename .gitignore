@@ -107,4 +107,4 @@ dist
 .vscode
 
 #sqlite
-./src/database/db.sqlite
+*.sqlite

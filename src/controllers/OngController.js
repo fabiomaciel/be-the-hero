@@ -1,4 +1,4 @@
-const { ulid } = require('ulid');
+const generateUniqueId = require('../utils/generateUniqueId');
 const connection = require('../database/connection')
 
 module.exports = {
@@ -9,7 +9,7 @@ module.exports = {
     async create(req, res) {
         const { name, email, whatsapp, city, uf } = req.body;
 
-        const id = ulid();
+        const id = generateUniqueId();
 
         await connection('ongs').insert({
             id,
