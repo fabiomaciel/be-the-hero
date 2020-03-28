@@ -1,24 +1,22 @@
-const connection = require('../database/connection');
+const { connection } = require('../database/connection');
 
 module.exports = {
 
     async list(req, res) {
-        const { page = 1, pageSize = 5 } = req.query;
+        const { query: { page = 1, pageSize = 5 } } = req;
 
         const [count] = await connection('incidents').count()
-
-        console.log(count);
 
         const incidents = await connection('incidents')
             .join('ongs', 'ongs.id', '=', 'incidents.ong_id')
             .limit(pageSize)
             .offset((page - 1) * pageSize)
             .select([
-                'incidents.*', 
-                'ongs.name', 
-                'ongs.email', 
-                'ongs.whatsapp', 
-                'ongs.city', 
+                'incidents.*',
+                'ongs.name',
+                'ongs.email',
+                'ongs.whatsapp',
+                'ongs.city',
                 'ongs.uf'
             ]);
 
