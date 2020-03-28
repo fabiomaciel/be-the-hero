@@ -4,7 +4,7 @@ module.exports = {
     async create(req, res) {
         const { id } = req.body;
 
-        const ong = await ongRepository.find(id, ['id', 'name']);
+        const ong = await ongRepository.find(id);
 
         if (!ong) {
             return res.status(400).json({ error: 'No ONG found with given id' });

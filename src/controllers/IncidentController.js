@@ -3,7 +3,7 @@ const incidentRepository = require('../infrastructure/repository/incidentReposit
 module.exports = {
 
     async list(req, res) {
-        const { query: { page = 1, pageSize = 5 } } = req;
+        const { query: { page, pageSize } } = req;
 
         const count = await incidentRepository.count();
         const incidents = await incidentRepository.findPage(page, pageSize);
