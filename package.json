@@ -6,8 +6,10 @@
   "scripts": {
     "start": "npm run migrate && node ./src/server.js",
     "migrate": "knex migrate:latest",
-    "debug": "nodemon --inspect ./src/server.js",
-    "test": "cross-env NODE_ENV=test jest"
+    "debug": "cross-env NODE_ENV=development nodemon --inspect ./src/server.js",
+    "test": "jest --clearCache && cross-env NODE_ENV=test jest --detectOpenHandles --forceExit",
+    "coverage": "jest --clearCache && cross-env NODE_ENV=test jest --detectOpenHandles --forceExit --collect-coverage ",
+    "jest-clear-cache": "jest --clearCache"
   },
   "author": "",
   "license": "ISC",
