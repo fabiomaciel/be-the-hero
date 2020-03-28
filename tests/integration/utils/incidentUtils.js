@@ -1,4 +1,4 @@
-const { connection } = require('../../../src/database/connection');
+const { connection } = require('../../../src/config/database');
 
 const validIncident = require('../resources/valid-incident');
 

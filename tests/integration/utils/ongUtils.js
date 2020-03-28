@@ -1,4 +1,4 @@
-const { connection } = require('../../../src/database/connection');
+const { connection } = require('../../../src/config/database');
 
 const validOng = require('../resources/valid-ong');
 const validOngList = require('../resources/valid-list-ongs')

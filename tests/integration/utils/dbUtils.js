@@ -1,5 +1,5 @@
 
-const { connection } = require('../../../src/database/connection')
+const { connection } = require('../../../src/config/database')
 
 async function clearDatabase() {
   await connection('incidents').truncate();

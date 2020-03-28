@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../../src/app');
 
-const { connection } = require('../../src/database/connection');
+const { connection } = require('../../src/config/database');
 
 const { clearDatabase } = require('./utils/dbUtils')
 const ongUtils = require('./utils/ongUtils');

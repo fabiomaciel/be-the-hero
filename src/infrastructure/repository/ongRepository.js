@@ -1,4 +1,4 @@
-const { connection } = require('../../database/connection');
+const { connection } = require('../../config/database');
 const generateUniqueId = require('../../utils/generateUniqueId');
 
 class OngRepository {
