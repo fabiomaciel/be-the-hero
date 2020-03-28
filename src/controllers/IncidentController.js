@@ -1,39 +1,27 @@
-const { connection } = require('../database/connection');
+const incidentRepository = require('../infrastructure/repository/incidentRepository');
 
 module.exports = {
 
     async list(req, res) {
         const { query: { page = 1, pageSize = 5 } } = req;
 
-        const [count] = await connection('incidents').count()
+        const count = await incidentRepository.count();
+        const incidents = await incidentRepository.findPage(page, pageSize);
 
-        const incidents = await connection('incidents')
-            .join('ongs', 'ongs.id', '=', 'incidents.ong_id')
-            .limit(pageSize)
-            .offset((page - 1) * pageSize)
-            .select([
-                'incidents.*',
-                'ongs.name',
-                'ongs.email',
-                'ongs.whatsapp',
-                'ongs.city',
-                'ongs.uf'
-            ]);
-
-        res.header('Total-Count', count['count(*)'])
-        return res.json(incidents)
+        res.header('Total-Count', count);
+        return res.json(incidents);
     },
 
     async create(req, res) {
         const { title, description, value } = req.body;
 
-        const ong_id = req.headers.authorization;
+        const ongId = req.headers.authorization;
 
-        const [id] = await connection('incidents').insert({
+        const id = await incidentRepository.save({
             title,
             description,
             value,
-            ong_id
+            ongId
         });
 
         return res.json({ id })
@@ -43,16 +31,13 @@ module.exports = {
         const { id } = req.params;
         const ong_id = req.headers.authorization;
 
-        const incident = await connection('incidents')
-            .where('id', id)
-            .select('ong_id')
-            .first();
+        const incident = await incidentRepository.find(id);
 
         if (!incident || incident.ong_id != ong_id) {
             return res.status(401).json({ error: 'Operation not permitted' });
         }
 
-        await connection('incidents').where('id', id).delete();
+        await incidentRepository.remove(id);
 
         return res.status(204).send();
 
